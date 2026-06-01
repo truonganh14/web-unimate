@@ -1,0 +1,2 @@
+tar -czf C:\tmp\unimate-backend.tar.gz --exclude='backend/node_modules' --exclude='backend/storage' -C D:\web-unimate backend
+scp -i D:\Downloads\FPT.pem C:\tmp\unimate-backend.tar.gz ec2-user@54.206.118.226:/home/ec2-user/unimate-backend.tar.gz

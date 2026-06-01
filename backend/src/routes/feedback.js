@@ -1,30 +1,52 @@
 import { Router } from 'express';
-import { Feedback } from '../models/Feedback.js';
+import { query } from '../config/db.js';
 import { adminAuth } from '../middleware/adminAuth.js';
 import { jwtAuth } from '../middleware/jwtAuth.js';
 import { validateFeedback } from '../middleware/validateFeedback.js';
 
 const router = Router();
 
+function toFeedbackResponse(feedback, includePrivate = true) {
+  const response = {
+    id: feedback.id,
+    name: feedback.name,
+    subject: feedback.subject,
+    message: feedback.message,
+    rating: feedback.rating,
+    createdAt: feedback.created_at,
+  };
+
+  if (includePrivate) {
+    response.email = feedback.email;
+    response.phone = feedback.phone;
+  }
+
+  return response;
+}
+
 router.post('/', jwtAuth, validateFeedback, async (req, res) => {
   try {
-    const feedback = await Feedback.create({
-      ...req.validatedFeedback,
-      userId: req.user._id,
-    });
+    const feedback = req.validatedFeedback;
+    const result = await query(
+      `
+        insert into feedback (user_id, name, email, phone, subject, message, rating)
+        values ($1, $2, $3, $4, $5, $6, $7)
+        returning id, name, email, phone, subject, message, rating, created_at
+      `,
+      [
+        req.user.id,
+        feedback.name,
+        feedback.email,
+        feedback.phone,
+        feedback.subject,
+        feedback.message,
+        feedback.rating,
+      ]
+    );
 
     return res.status(201).json({
       message: 'Feedback submitted successfully',
-      data: {
-        id: feedback._id,
-        name: feedback.name,
-        email: feedback.email,
-        phone: feedback.phone,
-        subject: feedback.subject,
-        message: feedback.message,
-        rating: feedback.rating,
-        createdAt: feedback.createdAt,
-      },
+      data: toFeedbackResponse(result.rows[0]),
     });
   } catch (error) {
     console.error('Create feedback error:', error);
@@ -36,32 +58,29 @@ router.get('/public', async (req, res) => {
   try {
     const page = Math.max(1, Number.parseInt(req.query.page, 10) || 1);
     const limit = Math.min(12, Math.max(1, Number.parseInt(req.query.limit, 10) || 3));
-    const skip = (page - 1) * limit;
+    const offset = (page - 1) * limit;
 
     const [feedbacks, total] = await Promise.all([
-      Feedback.find()
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit)
-        .select('name subject message rating createdAt'),
-      Feedback.countDocuments(),
+      query(
+        `
+          select id, name, subject, message, rating, created_at
+          from feedback
+          order by created_at desc
+          limit $1 offset $2
+        `,
+        [limit, offset]
+      ),
+      query('select count(*)::int as total from feedback'),
     ]);
 
     return res.status(200).json({
       message: 'Public feedbacks fetched successfully',
-      data: feedbacks.map((feedback) => ({
-        id: feedback._id,
-        name: feedback.name,
-        subject: feedback.subject,
-        message: feedback.message,
-        rating: feedback.rating,
-        createdAt: feedback.createdAt,
-      })),
+      data: feedbacks.rows.map((feedback) => toFeedbackResponse(feedback, false)),
       pagination: {
         page,
         limit,
-        total,
-        totalPages: Math.max(1, Math.ceil(total / limit)),
+        total: total.rows[0].total,
+        totalPages: Math.max(1, Math.ceil(total.rows[0].total / limit)),
       },
     });
   } catch (error) {
@@ -72,22 +91,17 @@ router.get('/public', async (req, res) => {
 
 router.get('/', adminAuth, async (_req, res) => {
   try {
-    const feedbacks = await Feedback.find()
-      .sort({ createdAt: -1 })
-      .select('name email phone subject message rating createdAt');
+    const result = await query(
+      `
+        select id, name, email, phone, subject, message, rating, created_at
+        from feedback
+        order by created_at desc
+      `
+    );
 
     return res.status(200).json({
       message: 'Feedbacks fetched successfully',
-      data: feedbacks.map((feedback) => ({
-        id: feedback._id,
-        name: feedback.name,
-        email: feedback.email,
-        phone: feedback.phone,
-        subject: feedback.subject,
-        message: feedback.message,
-        rating: feedback.rating,
-        createdAt: feedback.createdAt,
-      })),
+      data: result.rows.map((feedback) => toFeedbackResponse(feedback)),
     });
   } catch (error) {
     console.error('List feedback error:', error);
@@ -97,7 +111,8 @@ router.get('/', adminAuth, async (_req, res) => {
 
 router.delete('/:id', adminAuth, async (req, res) => {
   try {
-    const feedback = await Feedback.findByIdAndDelete(req.params.id);
+    const result = await query('delete from feedback where id = $1 returning id', [req.params.id]);
+    const feedback = result.rows[0];
 
     if (!feedback) {
       return res.status(404).json({ message: 'Feedback not found' });
@@ -105,10 +120,10 @@ router.delete('/:id', adminAuth, async (req, res) => {
 
     return res.status(200).json({
       message: 'Feedback deleted successfully',
-      data: { id: feedback._id },
+      data: { id: feedback.id },
     });
   } catch (error) {
-    if (error.name === 'CastError') {
+    if (error.code === '22P02') {
       return res.status(400).json({ message: 'Invalid feedback id' });
     }
 
