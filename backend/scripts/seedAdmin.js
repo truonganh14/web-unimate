@@ -1,43 +1,38 @@
 import 'dotenv/config';
 import bcrypt from 'bcryptjs';
-import mongoose from 'mongoose';
-import { User } from '../src/models/User.js';
+import { connectDB, query } from '../src/config/db.js';
 
 const adminEmail = (process.env.ADMIN_SEED_EMAIL || 'admin@fpt.edu.vn').trim().toLowerCase();
 const adminPassword = process.env.ADMIN_SEED_PASSWORD || 'Admin@123456';
 const adminName = process.env.ADMIN_SEED_NAME || 'Unimate Admin';
 
 async function seedAdmin() {
-  if (!process.env.MONGODB_URI) {
-    console.error('Missing MONGODB_URI');
+  if (!process.env.DATABASE_URL) {
+    console.error('Missing DATABASE_URL');
     process.exit(1);
   }
 
-  await mongoose.connect(process.env.MONGODB_URI);
+  await connectDB(process.env.DATABASE_URL);
 
-  const existingUser = await User.findOne({ email: adminEmail }).select('+passwordHash');
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
+  await query(
+    `
+      insert into users (name, email, password_hash, role)
+      values ($1, $2, $3, 'admin')
+      on conflict (email)
+      do update set
+        name = excluded.name,
+        password_hash = excluded.password_hash,
+        role = 'admin',
+        updated_at = now()
+    `,
+    [adminName, adminEmail, passwordHash]
+  );
 
-  if (existingUser) {
-    existingUser.name = adminName;
-    existingUser.role = 'admin';
-    existingUser.passwordHash = await bcrypt.hash(adminPassword, 10);
-    await existingUser.save();
-    console.log('Admin account updated');
-  } else {
-    const passwordHash = await bcrypt.hash(adminPassword, 10);
-    await User.create({
-      name: adminName,
-      email: adminEmail,
-      passwordHash,
-      role: 'admin',
-    });
-    console.log('Admin account created');
-  }
-
+  console.log('Admin account upserted');
   console.log(`Email: ${adminEmail}`);
   console.log(`Password: ${adminPassword}`);
-
-  await mongoose.disconnect();
+  process.exit(0);
 }
 
 seedAdmin().catch((error) => {

@@ -1,4 +1,4 @@
-import { User } from '../models/User.js';
+import { query } from '../config/db.js';
 import { verifyToken } from '../utils/token.js';
 
 export async function adminAuth(req, res, next) {
@@ -16,7 +16,8 @@ export async function adminAuth(req, res, next) {
 
   try {
     const payload = verifyToken(authHeader.slice(7));
-    const user = await User.findById(payload.sub).select('name email role');
+    const result = await query('select id, name, email, role from users where id = $1', [payload.sub]);
+    const user = result.rows[0];
 
     if (!user || user.role !== 'admin') {
       return res.status(403).json({ message: 'Admin access required' });

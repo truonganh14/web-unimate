@@ -1,4 +1,5 @@
 import { parseJsonResponse } from './client';
+import { API_BASE, apiFetch } from './baseUrl';
 
 export type User = {
   id: string;
@@ -22,7 +23,6 @@ type MeResponse = {
   data?: User;
 };
 
-const API_BASE = import.meta.env.VITE_API_URL ?? '';
 const TOKEN_KEY = 'unimate_auth_token';
 
 export function getStoredToken(): string | null {
@@ -52,7 +52,7 @@ export async function registerUser(payload: {
   email: string;
   password: string;
 }): Promise<{ token: string; user: User }> {
-  const response = await fetch(`${API_BASE}/api/auth/register`, {
+  const response = await apiFetch(`${API_BASE}/api/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -66,7 +66,7 @@ export async function loginUser(payload: {
   email: string;
   password: string;
 }): Promise<{ token: string; user: User }> {
-  const response = await fetch(`${API_BASE}/api/auth/login`, {
+  const response = await apiFetch(`${API_BASE}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -77,7 +77,7 @@ export async function loginUser(payload: {
 }
 
 export async function fetchCurrentUser(token: string): Promise<User> {
-  const response = await fetch(`${API_BASE}/api/auth/me`, {
+  const response = await apiFetch(`${API_BASE}/api/auth/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

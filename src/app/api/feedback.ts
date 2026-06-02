@@ -1,4 +1,5 @@
 import { parseJsonResponse } from './client';
+import { API_BASE, apiFetch } from './baseUrl';
 
 export type FeedbackPayload = {
   name: string;
@@ -51,13 +52,11 @@ type PublicFeedbackListResponse = {
   };
 };
 
-const API_BASE = import.meta.env.VITE_API_URL ?? '';
-
 export async function submitFeedback(
   payload: FeedbackPayload,
   token: string
 ): Promise<FeedbackResponse> {
-  const response = await fetch(`${API_BASE}/api/feedback`, {
+  const response = await apiFetch(`${API_BASE}/api/feedback`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -76,7 +75,7 @@ export async function submitFeedback(
 }
 
 export async function fetchFeedbacks(token: string): Promise<FeedbackItem[]> {
-  const response = await fetch(`${API_BASE}/api/feedback`, {
+  const response = await apiFetch(`${API_BASE}/api/feedback`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -103,7 +102,7 @@ export async function fetchPublicFeedbacks(
     limit: String(limit),
   });
 
-  const response = await fetch(`${API_BASE}/api/feedback/public?${params}`);
+  const response = await apiFetch(`${API_BASE}/api/feedback/public?${params}`);
   const data = await parseJsonResponse<PublicFeedbackListResponse>(response);
 
   if (!response.ok) {
@@ -117,7 +116,7 @@ export async function fetchPublicFeedbacks(
 }
 
 export async function deleteFeedback(id: string, token: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/api/feedback/${id}`, {
+  const response = await apiFetch(`${API_BASE}/api/feedback/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
