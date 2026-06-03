@@ -1,5 +1,4 @@
-import { parseJsonResponse } from './client';
-import { API_BASE, apiFetch } from './baseUrl';
+import { API_BASE_URL, apiFetch } from './baseUrl';
 
 export type FeedbackPayload = {
   name: string;
@@ -52,11 +51,15 @@ type PublicFeedbackListResponse = {
   };
 };
 
+function parseJsonResponse<T>(response: Response): Promise<T> {
+  return response.json() as Promise<T>;
+}
+
 export async function submitFeedback(
   payload: FeedbackPayload,
   token: string
 ): Promise<FeedbackResponse> {
-  const response = await apiFetch(`${API_BASE}/api/feedback`, {
+  const response = await apiFetch(`${API_BASE_URL}/api/feedback`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -75,7 +78,7 @@ export async function submitFeedback(
 }
 
 export async function fetchFeedbacks(token: string): Promise<FeedbackItem[]> {
-  const response = await apiFetch(`${API_BASE}/api/feedback`, {
+  const response = await apiFetch(`${API_BASE_URL}/api/feedback`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -102,7 +105,7 @@ export async function fetchPublicFeedbacks(
     limit: String(limit),
   });
 
-  const response = await apiFetch(`${API_BASE}/api/feedback/public?${params}`);
+  const response = await apiFetch(`${API_BASE_URL}/api/feedback/public?${params}`);
   const data = await parseJsonResponse<PublicFeedbackListResponse>(response);
 
   if (!response.ok) {
@@ -116,7 +119,7 @@ export async function fetchPublicFeedbacks(
 }
 
 export async function deleteFeedback(id: string, token: string): Promise<void> {
-  const response = await apiFetch(`${API_BASE}/api/feedback/${id}`, {
+  const response = await apiFetch(`${API_BASE_URL}/api/feedback/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,

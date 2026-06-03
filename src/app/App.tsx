@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Bot, Sparkles, Clock, MessageCircle, Users, CheckCircle, ArrowRight, Zap, Shield, Brain, Star, ChevronRight, Globe, BarChart3, HeadphonesIcon, Rocket } from 'lucide-react';
 import FeedbackForm from './components/FeedbackForm';
 import PublicTestimonials from './components/PublicTestimonials';
@@ -8,6 +8,7 @@ import { useAuth } from './context/AuthContext';
 
 export default function App() {
   const { user, logout, isLoading } = useAuth();
+  const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -193,13 +194,16 @@ export default function App() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-                <button className="group px-8 py-5 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 hover:shadow-2xl hover:shadow-purple-500/50 text-white rounded-2xl font-bold text-lg transition-all transform hover:scale-105 flex items-center justify-center gap-3">
-                  <Rocket className="w-6 h-6 group-hover:translate-y-[-4px] transition-transform" />
-                  Trải nghiệm ngay
-                </button>
-                <button className="px-8 py-5 bg-white hover:bg-gray-50 text-gray-900 rounded-2xl font-bold text-lg border-2 border-gray-200 hover:border-purple-300 transition-all shadow-lg">
-                  Xem demo 2 phút
-                </button>
+                <Link
+                      to="/chat"
+                      className="group px-8 py-5 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 hover:shadow-2xl hover:shadow-purple-500/50 text-white rounded-2xl font-bold text-lg transition-all transform hover:scale-105 flex items-center justify-center gap-3"
+                    >
+                      <Rocket className="w-6 h-6 group-hover:translate-y-[-4px] transition-transform" />
+                      Trải nghiệm ngay
+                    </Link>
+                    <button className="px-8 py-5 bg-white hover:bg-gray-50 text-gray-900 rounded-2xl font-bold text-lg border-2 border-gray-200 hover:border-purple-300 transition-all shadow-lg">
+                      Xem demo 2 phút
+                    </button>
               </div>
 
               {/* Mini Stats */}
@@ -447,10 +451,13 @@ export default function App() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <button className="group px-10 py-6 bg-white hover:bg-gray-50 text-purple-600 rounded-2xl font-black text-xl transition-all shadow-2xl hover:shadow-3xl flex items-center justify-center gap-3 transform hover:scale-105">
+            <Link
+              to="/chat"
+              className="group px-10 py-6 bg-white hover:bg-gray-50 text-purple-600 rounded-2xl font-black text-xl transition-all shadow-2xl hover:shadow-3xl flex items-center justify-center gap-3 transform hover:scale-105"
+            >
               Trò chuyện với Unimate ngay
               <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-            </button>
+            </Link>
           </div>
 
           <div className="flex items-center justify-center gap-8 text-white/80">

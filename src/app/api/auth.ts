@@ -1,5 +1,4 @@
-import { parseJsonResponse } from './client';
-import { API_BASE, apiFetch } from './baseUrl';
+import { API_BASE_URL, apiFetch } from './baseUrl';
 
 export type User = {
   id: string;
@@ -38,7 +37,14 @@ export function setStoredToken(token: string | null) {
 }
 
 async function parseAuthResponse(response: Response): Promise<AuthResponse> {
-  const data = await parseJsonResponse<AuthResponse>(response);
+  const text = await response.text();
+  if (!text) throw new Error('Không nhận được phản hồi từ máy chủ');
+  let data: AuthResponse;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error('Phản hồi không hợp lệ từ máy chủ');
+  }
 
   if (!response.ok) {
     throw new Error(data.errors?.join(', ') || data.message || 'Request failed');
@@ -52,7 +58,7 @@ export async function registerUser(payload: {
   email: string;
   password: string;
 }): Promise<{ token: string; user: User }> {
-  const response = await apiFetch(`${API_BASE}/api/auth/register`, {
+  const response = await apiFetch(`${API_BASE_URL}/api/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -66,7 +72,7 @@ export async function loginUser(payload: {
   email: string;
   password: string;
 }): Promise<{ token: string; user: User }> {
-  const response = await apiFetch(`${API_BASE}/api/auth/login`, {
+  const response = await apiFetch(`${API_BASE_URL}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -77,13 +83,20 @@ export async function loginUser(payload: {
 }
 
 export async function fetchCurrentUser(token: string): Promise<User> {
-  const response = await apiFetch(`${API_BASE}/api/auth/me`, {
+  const response = await apiFetch(`${API_BASE_URL}/api/auth/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const data = await parseJsonResponse<MeResponse>(response);
+  const text = await response.text();
+  if (!text) throw new Error('Không nhận được phản hồi từ máy chủ');
+  let data: MeResponse;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error('Phản hồi không hợp lệ từ máy chủ');
+  }
 
   if (!response.ok) {
     throw new Error(data.message || 'Session expired');
