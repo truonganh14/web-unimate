@@ -27,14 +27,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen unimate-page-bg flex items-center justify-center px-4 py-8 sm:py-12 pb-[calc(2rem+env(safe-area-inset-bottom))]">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-violet-500 via-purple-600 to-fuchsia-600 rounded-2xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-brand-royal via-brand-sky to-brand-mint rounded-2xl shadow-lg shadow-brand-sky/20 flex items-center justify-center">
               <Sparkles className="w-7 h-7 text-white" />
             </div>
-            <span className="text-2xl font-black bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-black unimate-gradient-text">
               Unimate
             </span>
           </Link>
@@ -44,7 +44,7 @@ export default function LoginPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-3xl border border-purple-100 bg-white p-8 shadow-xl space-y-5"
+          className="rounded-2xl sm:rounded-3xl border border-brand-sky/25 bg-white p-5 sm:p-8 shadow-xl space-y-5"
         >
           <div>
             <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -56,7 +56,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-2xl border border-purple-100 px-4 py-3 outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
+              className="w-full rounded-2xl border border-brand-sky/25 px-4 py-3 outline-none focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/30"
               placeholder="sinhvien@fpt.edu.vn"
             />
           </div>
@@ -72,7 +72,7 @@ export default function LoginPage() {
               minLength={6}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded-2xl border border-purple-100 px-4 py-3 outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
+              className="w-full rounded-2xl border border-brand-sky/25 px-4 py-3 outline-none focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/30"
               placeholder="••••••••"
             />
           </div>
@@ -86,7 +86,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-3 font-bold text-white disabled:opacity-70"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl unimate-btn-primary px-4 py-3 font-bold text-white disabled:opacity-70"
           >
             {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <LogIn className="h-5 w-5" />}
             {isSubmitting ? 'Đang đăng nhập...' : 'Đăng nhập'}
@@ -95,7 +95,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-gray-600 mt-6">
           Chưa có tài khoản?{' '}
-          <Link to="/register" className="font-semibold text-purple-600 hover:text-purple-700">
+          <Link to="/register" className="font-semibold text-brand-royal hover:text-brand-sky">
             Đăng ký ngay
           </Link>
         </p>

@@ -67,16 +67,16 @@ export default function PublicTestimonials() {
   };
 
   return (
-    <section id="testimonials" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="testimonials" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brand-sky/8 via-white to-brand-mint/10">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-black text-gray-900 mb-6">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-brand-navy mb-4 sm:mb-6 px-2">
             Sinh viên nói gì về{' '}
-            <span className="bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="unimate-gradient-text">
               Unimate
             </span>
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 px-2">
             {total > 0
               ? `${total} phản hồi từ cộng đồng sinh viên FPT`
               : 'Hàng nghìn lời khen từ cộng đồng sinh viên FPT'}
@@ -90,20 +90,24 @@ export default function PublicTestimonials() {
         )}
 
         {isLoading ? (
-          <div className="flex items-center justify-center py-20 text-purple-700">
+          <div className="flex items-center justify-center py-20 text-brand-navy">
             <Loader2 className="h-8 w-8 animate-spin" />
           </div>
         ) : items.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-purple-200 bg-purple-50/50 p-12 text-center text-gray-500">
-            Chưa có phản hồi nào. Hãy là đầu tiên gửi đánh giá ở mục Liên hệ bên dưới!
+          <div className="rounded-2xl sm:rounded-3xl border border-dashed border-brand-sky/30 bg-brand-sky/8 p-6 sm:p-12 text-center text-brand-navy/60 text-sm sm:text-base">
+            Chưa có phản hồi nào. Hãy là đầu tiên gửi đánh giá tại mục{' '}
+            <a href="/#feedback" className="font-semibold text-brand-royal hover:text-brand-sky">
+              Góp ý
+            </a>{' '}
+            trên trang chủ!
           </div>
         ) : (
           <>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
               {items.map((item, index) => (
                 <div
                   key={item.id}
-                  className="p-8 bg-gradient-to-br from-white to-purple-50 border-2 border-purple-100 rounded-3xl hover:shadow-2xl transition-all transform hover:scale-105"
+                  className="p-5 sm:p-8 bg-white/95 border-2 border-brand-sky/20 rounded-2xl sm:rounded-3xl hover:border-brand-mint/50 hover:shadow-2xl hover:shadow-brand-sky/15 transition-all sm:transform sm:hover:scale-105"
                 >
                   <div className="flex items-center gap-4 mb-6">
                     <div className="text-5xl">{getAvatar(item.name, index)}</div>
@@ -118,7 +122,7 @@ export default function PublicTestimonials() {
                     ))}
                   </div>
                   {item.subject && (
-                    <p className="text-sm font-semibold text-purple-700 mb-2">{item.subject}</p>
+                    <p className="text-sm font-semibold text-brand-sky mb-2">{item.subject}</p>
                   )}
                   <p className="text-gray-700 leading-relaxed italic">&ldquo;{item.message}&rdquo;</p>
                 </div>
@@ -126,18 +130,22 @@ export default function PublicTestimonials() {
             </div>
 
             {totalPages > 1 && (
-              <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
                 <button
                   type="button"
                   onClick={() => goToPage(page - 1)}
                   disabled={page <= 1}
-                  className="inline-flex items-center gap-2 rounded-2xl border border-purple-200 bg-white px-5 py-3 text-sm font-semibold text-purple-700 transition hover:bg-purple-50 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl border border-brand-royal/25 bg-white px-5 py-3 text-sm font-semibold text-brand-navy transition hover:bg-brand-sky/10 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ChevronLeft className="h-4 w-4" />
                   Trang trước
                 </button>
 
-                <div className="flex items-center gap-2">
+                <span className="sm:hidden text-center text-sm font-semibold text-brand-navy py-1">
+                  Trang {page} / {totalPages}
+                </span>
+
+                <div className="hidden sm:flex items-center gap-2 flex-wrap justify-center">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
                     <button
                       key={pageNumber}
@@ -145,8 +153,8 @@ export default function PublicTestimonials() {
                       onClick={() => goToPage(pageNumber)}
                       className={`h-10 w-10 rounded-xl text-sm font-bold transition ${
                         pageNumber === page
-                          ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg'
-                          : 'border border-purple-200 bg-white text-purple-700 hover:bg-purple-50'
+                          ? 'unimate-btn-primary text-white shadow-lg shadow-brand-sky/20'
+                          : 'border border-brand-royal/25 bg-white text-brand-navy hover:bg-brand-sky/10'
                       }`}
                     >
                       {pageNumber}
@@ -158,7 +166,7 @@ export default function PublicTestimonials() {
                   type="button"
                   onClick={() => goToPage(page + 1)}
                   disabled={page >= totalPages}
-                  className="inline-flex items-center gap-2 rounded-2xl border border-purple-200 bg-white px-5 py-3 text-sm font-semibold text-purple-700 transition hover:bg-purple-50 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl border border-brand-royal/25 bg-white px-5 py-3 text-sm font-semibold text-brand-navy transition hover:bg-brand-sky/10 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Trang sau
                   <ChevronRight className="h-4 w-4" />

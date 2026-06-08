@@ -4,6 +4,7 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/auth.js';
+import contactRoutes from './routes/contact.js';
 import feedbackRoutes from './routes/feedback.js';
 import chatboxRoutes from './routes/chatbox.js';
 import { ensureStorageDirs } from './chat/audioStorage.js';
@@ -15,9 +16,21 @@ const corsOrigins = (process.env.CORS_ALLOW_ORIGINS || process.env.CLIENT_ORIGIN
   .split(',')
   .map((origin) => origin.trim())
   .filter(Boolean);
+const extraOrigins = (process.env.CLIENT_ORIGINS || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+const ngrokOriginPattern =
+  /^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.(ngrok-free\.app|ngrok-free\.dev|ngrok\.io|ngrok\.dev)$/;
 const corsOptions = {
   origin(origin, callback) {
-    if (!origin || corsOrigins.includes('*') || corsOrigins.includes(origin)) {
+    if (
+      !origin ||
+      corsOrigins.includes('*') ||
+      corsOrigins.includes(origin) ||
+      extraOrigins.includes(origin) ||
+      ngrokOriginPattern.test(origin)
+    ) {
       return callback(null, true);
     }
     return callback(new Error(`Origin not allowed by CORS: ${origin}`));
@@ -48,6 +61,7 @@ app.get('/openapi.json', (_req, res) => {
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/contact', contactRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/v1', chatboxRoutes);
 
