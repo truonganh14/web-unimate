@@ -15,8 +15,8 @@ export default function AdminRoute({ children }: { children: ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
-        <Loader2 className="h-8 w-8 animate-spin text-purple-700" />
+      <div className="min-h-screen flex items-center justify-center unimate-page-bg">
+        <Loader2 className="h-8 w-8 animate-spin text-brand-navy" />
       </div>
     );
   }

@@ -66,7 +66,7 @@ export default function FeedbackForm() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-16 text-purple-700">
+      <div className="flex items-center justify-center py-16 text-brand-navy">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
@@ -74,8 +74,8 @@ export default function FeedbackForm() {
 
   if (!user || !token) {
     return (
-      <div className="rounded-3xl border border-dashed border-purple-200 bg-purple-50/60 p-10 text-center">
-        <LogIn className="mx-auto h-10 w-10 text-purple-600 mb-4" />
+      <div className="rounded-2xl sm:rounded-3xl border border-dashed border-brand-royal/25 bg-brand-royal/8 p-6 sm:p-10 text-center">
+        <LogIn className="mx-auto h-10 w-10 text-brand-royal mb-4" />
         <h3 className="text-xl font-bold text-gray-900 mb-2">Cần đăng nhập để gửi phản hồi</h3>
         <p className="text-gray-600 mb-6">
           Vui lòng đăng nhập hoặc tạo tài khoản để chia sẻ góp ý với Unimate.
@@ -83,13 +83,13 @@ export default function FeedbackForm() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             to="/login"
-            className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-violet-600 to-purple-600 px-6 py-3 font-bold text-white"
+            className="inline-flex items-center justify-center rounded-2xl unimate-btn-primary px-6 py-3 font-bold text-white"
           >
             Đăng nhập
           </Link>
           <Link
             to="/register"
-            className="inline-flex items-center justify-center rounded-2xl border border-purple-200 bg-white px-6 py-3 font-semibold text-purple-700"
+            className="inline-flex items-center justify-center rounded-2xl border border-brand-royal/25 bg-white px-6 py-3 font-semibold text-brand-navy"
           >
             Đăng ký
           </Link>
@@ -112,7 +112,7 @@ export default function FeedbackForm() {
             maxLength={100}
             value={form.name}
             onChange={(event) => handleChange('name', event.target.value)}
-            className="w-full rounded-2xl border border-purple-100 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
+            className="w-full rounded-2xl border border-brand-sky/25 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/30"
             placeholder="Nguyễn Văn A"
           />
         </div>
@@ -127,7 +127,7 @@ export default function FeedbackForm() {
             required
             value={form.email}
             onChange={(event) => handleChange('email', event.target.value)}
-            className="w-full rounded-2xl border border-purple-100 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
+            className="w-full rounded-2xl border border-brand-sky/25 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/30"
             placeholder="sinhvien@fpt.edu.vn"
           />
         </div>
@@ -143,7 +143,7 @@ export default function FeedbackForm() {
             maxLength={20}
             value={form.phone}
             onChange={(event) => handleChange('phone', event.target.value)}
-            className="w-full rounded-2xl border border-purple-100 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
+            className="w-full rounded-2xl border border-brand-sky/25 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/30"
             placeholder="0901234567"
           />
         </div>
@@ -159,7 +159,7 @@ export default function FeedbackForm() {
             maxLength={200}
             value={form.subject}
             onChange={(event) => handleChange('subject', event.target.value)}
-            className="w-full rounded-2xl border border-purple-100 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
+            className="w-full rounded-2xl border border-brand-sky/25 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/30"
             placeholder="Góp ý về Unimate"
           />
         </div>
@@ -177,7 +177,7 @@ export default function FeedbackForm() {
           rows={5}
           value={form.message}
           onChange={(event) => handleChange('message', event.target.value)}
-          className="w-full rounded-2xl border border-purple-100 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-purple-400 focus:ring-4 focus:ring-purple-100 resize-none"
+          className="w-full rounded-2xl border border-brand-sky/25 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/30 resize-none"
           placeholder="Chia sẻ trải nghiệm hoặc góp ý của bạn..."
         />
       </div>
@@ -190,10 +190,10 @@ export default function FeedbackForm() {
               key={value}
               type="button"
               onClick={() => handleChange('rating', value)}
-              className={`flex h-12 w-12 items-center justify-center rounded-2xl border transition ${
+              className={`flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl border transition ${
                 form.rating >= value
                   ? 'border-yellow-300 bg-yellow-50 text-yellow-500'
-                  : 'border-purple-100 bg-white text-gray-300 hover:border-yellow-200'
+                  : 'border-brand-royal/20 bg-white text-gray-300 hover:border-yellow-200'
               }`}
               aria-label={`${value} sao`}
             >
@@ -219,7 +219,7 @@ export default function FeedbackForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="group inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 px-8 py-4 text-lg font-bold text-white transition hover:shadow-xl hover:shadow-purple-500/40 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+        className="group inline-flex w-full items-center justify-center gap-3 rounded-2xl unimate-btn-cta px-8 py-4 text-lg font-bold transition disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
         {isSubmitting ? (
           <>

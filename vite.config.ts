@@ -25,6 +25,14 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
+    host: true,
+    allowedHosts: [
+      '.ngrok-free.app',
+      '.ngrok-free.dev',
+      '.ngrok.io',
+      '.ngrok.dev',
+      'localhost',
+    ],
     proxy: {
       '/api': {
         target: 'http://localhost:5000',

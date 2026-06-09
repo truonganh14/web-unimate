@@ -55,17 +55,17 @@ export default function AdminFeedbackPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="min-h-screen unimate-page-bg">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-purple-100 mb-4">
-              <Shield className="w-4 h-4 text-purple-600" />
-              <span className="text-sm font-semibold text-purple-700">Trang quản trị Admin</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-brand-sky/25 mb-4">
+              <Shield className="w-4 h-4 text-brand-royal" />
+              <span className="text-sm font-semibold text-brand-navy">Trang quản trị Admin</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-black text-gray-900">Quản lý phản hồi</h1>
             <p className="text-gray-600 mt-2">
-              Xin chào, <span className="font-semibold text-purple-700">{user?.name}</span> — xem và xóa feedback từ người dùng.
+              Xin chào, <span className="font-semibold text-brand-navy">{user?.name}</span> — xem và xóa feedback từ người dùng.
             </p>
           </div>
         </div>
@@ -73,14 +73,14 @@ export default function AdminFeedbackPage() {
         <div className="space-y-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-gray-600">
-              Tổng cộng <span className="font-bold text-purple-700">{feedbacks.length}</span> phản hồi
+              Tổng cộng <span className="font-bold text-brand-navy">{feedbacks.length}</span> phản hồi
             </p>
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={() => token && loadFeedbacks(token)}
                 disabled={isLoading}
-                className="inline-flex items-center gap-2 rounded-2xl border border-purple-200 bg-white px-4 py-2 text-sm font-semibold text-purple-700"
+                className="inline-flex items-center gap-2 rounded-2xl border border-brand-royal/25 bg-white px-4 py-2 text-sm font-semibold text-brand-navy"
               >
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
                 Làm mới
@@ -102,11 +102,11 @@ export default function AdminFeedbackPage() {
           )}
 
           {isLoading ? (
-            <div className="flex items-center justify-center py-20 text-purple-700">
+            <div className="flex items-center justify-center py-20 text-brand-navy">
               <Loader2 className="h-8 w-8 animate-spin" />
             </div>
           ) : feedbacks.length === 0 ? (
-            <div className="rounded-3xl border border-dashed border-purple-200 bg-white/80 p-12 text-center text-gray-500">
+            <div className="rounded-3xl border border-dashed border-brand-royal/25 bg-white/80 p-12 text-center text-gray-500">
               Chưa có phản hồi nào.
             </div>
           ) : (
@@ -114,7 +114,7 @@ export default function AdminFeedbackPage() {
               {feedbacks.map((feedback) => (
                 <article
                   key={feedback.id}
-                  className="rounded-3xl border border-purple-100 bg-white p-6 shadow-sm"
+                  className="rounded-2xl sm:rounded-3xl border border-brand-sky/25 bg-white p-4 sm:p-6 shadow-sm"
                 >
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div className="space-y-3 flex-1">
