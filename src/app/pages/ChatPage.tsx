@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router';
 import {
   Bot,
-  Sparkles,
   ArrowLeft,
   SendHorizontal,
   Volume2,
@@ -10,6 +9,7 @@ import {
   Trash2,
   Loader2,
 } from 'lucide-react';
+import { UnimateAvatar } from '../components/UnimateLogo';
 import {
   sendChatMessage,
   ChatMessage,
@@ -153,13 +153,6 @@ export default function ChatPage() {
               <ArrowLeft className="w-5 h-5" />
             </button>
 
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl blur-md opacity-40" />
-              <div className="relative w-10 h-10 bg-gradient-to-br from-violet-500 via-purple-600 to-fuchsia-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-            </div>
-
             <div>
               <h1 className="text-lg font-bold text-gray-900">Unimate</h1>
               <p className="text-xs text-gray-500">Trợ lý AI FPT University</p>
@@ -251,8 +244,8 @@ export default function ChatPage() {
               className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
             >
               {msg.role === 'assistant' && (
-                <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-white" />
+                <div className="flex-shrink-0 w-9 h-9">
+                  <UnimateAvatar />
                 </div>
               )}
 
@@ -318,8 +311,8 @@ export default function ChatPage() {
 
           {isLoading && (
             <div className="flex gap-3">
-              <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-white" />
+              <div className="flex-shrink-0 w-9 h-9">
+                <UnimateAvatar />
               </div>
               <div className="bg-white border border-purple-100 rounded-2xl rounded-tl-md px-5 py-4 shadow-sm">
                 <div className="flex items-center gap-2 text-gray-500 text-sm">

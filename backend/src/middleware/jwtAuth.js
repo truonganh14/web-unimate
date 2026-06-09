@@ -1,4 +1,4 @@
-import { query } from '../config/db.js';
+import { User } from '../models/User.js';
 import { verifyToken } from '../utils/token.js';
 
 export async function jwtAuth(req, res, next) {
@@ -8,10 +8,11 @@ export async function jwtAuth(req, res, next) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
+  const token = authHeader.slice(7);
+
   try {
-    const payload = verifyToken(authHeader.slice(7));
-    const result = await query('select id, name, email, role from users where id = $1', [payload.sub]);
-    const user = result.rows[0];
+    const payload = verifyToken(token);
+    const user = await User.findById(payload.sub).select('name email role');
 
     if (!user) {
       return res.status(401).json({ message: 'Unauthorized' });

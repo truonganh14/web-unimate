@@ -3,7 +3,7 @@ import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { Router } from 'express';
 import multer from 'multer';
-import { query } from '../config/db.js';
+import { Document } from '../models/Document.js';
 import {
   appendMessage,
   getMessages,
@@ -172,25 +172,16 @@ router.post('/documents/upload', upload.single('file'), async (req, res, next) =
       return res.status(400).json({ detail: 'file is required' });
     }
     const uploaded = await uploadOpenAiDocument(req.file);
-    const result = await query(
-      `
-        insert into documents (
-          filename, content_type, size, file_id, vector_store_id, vector_store_file_id, status
-        )
-        values ($1, $2, $3, $4, $5, $6, $7)
-        returning *
-      `,
-      [
-        uploaded.filename,
-        uploaded.content_type,
-        uploaded.size,
-        uploaded.file_id,
-        uploaded.vector_store_id,
-        uploaded.vector_store_file_id,
-        uploaded.status,
-      ]
-    );
-    return res.json(documentResponse(result.rows[0]));
+    const document = await Document.create({
+      filename: uploaded.filename,
+      contentType: uploaded.content_type,
+      size: uploaded.size,
+      fileId: uploaded.file_id,
+      vectorStoreId: uploaded.vector_store_id,
+      vectorStoreFileId: uploaded.vector_store_file_id,
+      status: uploaded.status,
+    });
+    return res.json(documentResponse(document));
   } catch (error) {
     next(error);
   }
@@ -198,8 +189,8 @@ router.post('/documents/upload', upload.single('file'), async (req, res, next) =
 
 router.get('/documents', async (_req, res, next) => {
   try {
-    const result = await query('select * from documents order by updated_at desc, id desc');
-    res.json(result.rows.map(documentResponse));
+    const documents = await Document.find().sort({ updatedAt: -1, _id: -1 });
+    res.json(documents.map(documentResponse));
   } catch (error) {
     next(error);
   }
@@ -210,39 +201,22 @@ router.put('/documents/:documentId', upload.single('file'), async (req, res, nex
     if (!req.file) {
       return res.status(400).json({ detail: 'file is required' });
     }
-    const existing = await query('select * from documents where id = $1', [req.params.documentId]);
-    if (!existing.rows[0]) {
+    const existing = await Document.findById(req.params.documentId);
+    if (!existing) {
       return res.status(404).json({ detail: 'Document not found' });
     }
 
-    await deleteOpenAiDocument(existing.rows[0].vector_store_id, existing.rows[0].file_id);
+    await deleteOpenAiDocument(existing.vectorStoreId, existing.fileId);
     const uploaded = await uploadOpenAiDocument(req.file);
-    const result = await query(
-      `
-        update documents
-        set filename = $1,
-            content_type = $2,
-            size = $3,
-            file_id = $4,
-            vector_store_id = $5,
-            vector_store_file_id = $6,
-            status = $7,
-            updated_at = now()
-        where id = $8
-        returning *
-      `,
-      [
-        uploaded.filename,
-        uploaded.content_type,
-        uploaded.size,
-        uploaded.file_id,
-        uploaded.vector_store_id,
-        uploaded.vector_store_file_id,
-        uploaded.status,
-        req.params.documentId,
-      ]
-    );
-    return res.json(documentResponse(result.rows[0]));
+    existing.filename = uploaded.filename;
+    existing.contentType = uploaded.content_type;
+    existing.size = uploaded.size;
+    existing.fileId = uploaded.file_id;
+    existing.vectorStoreId = uploaded.vector_store_id;
+    existing.vectorStoreFileId = uploaded.vector_store_file_id;
+    existing.status = uploaded.status;
+    await existing.save();
+    return res.json(documentResponse(existing));
   } catch (error) {
     next(error);
   }
@@ -250,13 +224,13 @@ router.put('/documents/:documentId', upload.single('file'), async (req, res, nex
 
 router.delete('/documents/:documentId', async (req, res, next) => {
   try {
-    const existing = await query('select * from documents where id = $1', [req.params.documentId]);
-    if (!existing.rows[0]) {
+    const existing = await Document.findById(req.params.documentId);
+    if (!existing) {
       return res.status(404).json({ detail: 'Document not found' });
     }
-    await deleteOpenAiDocument(existing.rows[0].vector_store_id, existing.rows[0].file_id);
-    const result = await query('delete from documents where id = $1', [req.params.documentId]);
-    return res.json({ id: Number(req.params.documentId), deleted: result.rowCount > 0 });
+    await deleteOpenAiDocument(existing.vectorStoreId, existing.fileId);
+    await existing.deleteOne();
+    return res.json({ id: req.params.documentId, deleted: true });
   } catch (error) {
     next(error);
   }
@@ -338,18 +312,18 @@ function saveVoiceUpload(file) {
   return savedPath;
 }
 
-function documentResponse(row) {
+function documentResponse(doc) {
   return {
-    id: Number(row.id),
-    filename: row.filename,
-    content_type: row.content_type,
-    size: Number(row.size),
-    file_id: row.file_id,
-    vector_store_id: row.vector_store_id,
-    vector_store_file_id: row.vector_store_file_id,
-    status: row.status,
-    created_at: row.created_at,
-    updated_at: row.updated_at,
+    id: doc._id.toString(),
+    filename: doc.filename,
+    content_type: doc.contentType,
+    size: Number(doc.size),
+    file_id: doc.fileId,
+    vector_store_id: doc.vectorStoreId,
+    vector_store_file_id: doc.vectorStoreFileId,
+    status: doc.status,
+    created_at: doc.createdAt,
+    updated_at: doc.updatedAt,
   };
 }
 

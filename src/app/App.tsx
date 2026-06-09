@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import { Sparkles, Clock, MessageCircle, Users, CheckCircle, ArrowRight, Zap, Shield, Brain, Star, ChevronRight, BarChart3, HeadphonesIcon, Rocket, Menu, X } from 'lucide-react';
+import { Clock, MessageCircle, Users, CheckCircle, ArrowRight, Zap, Shield, Brain, Star, ChevronRight, HeadphonesIcon, Rocket, Menu, X } from 'lucide-react';
+import { UnimateAvatar, UnimateLogo } from './components/UnimateLogo';
 import FeedbackForm from './components/FeedbackForm';
 import PublicTestimonials from './components/PublicTestimonials';
 import { AdminHomeRedirect } from './components/AdminRoute';
@@ -44,7 +45,7 @@ export default function App() {
     {
       icon: Zap,
       title: 'Siêu tốc độ',
-      description: 'Phản hồi trong < 3 giây, nhanh hơn gấp 100 lần so với phương pháp truyền thống',
+      description: 'Phản hồi trong < 10 giây, nhanh hơn gấp 100 lần so với phương pháp truyền thống',
       gradient: 'from-brand-amber to-brand-orange',
       delay: '100'
     },
@@ -67,7 +68,7 @@ export default function App() {
   const stats = [
     {
       icon: Users,
-      number: '12,000+',
+      number: '3,000',
       label: 'Sinh viên tin dùng',
       gradient: 'from-brand-royal to-brand-sky'
     },
@@ -78,14 +79,8 @@ export default function App() {
       gradient: 'from-brand-amber to-brand-orange'
     },
     {
-      icon: BarChart3,
-      number: '98%',
-      label: 'Độ hài lòng',
-      gradient: 'from-brand-sky to-brand-mint'
-    },
-    {
       icon: Zap,
-      number: '2.8s',
+      number: '10s',
       label: 'Thời gian phản hồi',
       gradient: 'from-brand-navy to-brand-royal'
     }
@@ -110,21 +105,8 @@ export default function App() {
         scrollY > 50 || mobileMenuOpen ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-brand-sky/10 border-b border-brand-sky/15' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-20">
-            <Link to="/" className="flex items-center gap-2 sm:gap-3 min-w-0" onClick={closeMobileMenu}>
-              <div className="relative shrink-0">
-                <div className="absolute inset-0 bg-gradient-to-r from-brand-royal via-brand-sky to-brand-mint rounded-xl sm:rounded-2xl blur-lg opacity-60"></div>
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-brand-royal via-brand-sky to-brand-mint rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shadow-brand-sky/30">
-                  <Sparkles className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-                </div>
-              </div>
-              <div className="min-w-0">
-                <span className="text-xl sm:text-2xl font-black unimate-gradient-text block truncate">
-                  Unimate
-                </span>
-                <p className="hidden sm:block text-xs text-gray-500 -mt-1">Your University Mate</p>
-              </div>
-            </Link>
+          <div className="flex justify-between items-center min-h-28 sm:min-h-36 py-2">
+            <UnimateLogo asLink size="md" onClick={closeMobileMenu} />
 
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) =>
@@ -280,7 +262,7 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-28 sm:pt-36 md:pt-40 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 unimate-hero-bg">
           <div className="absolute top-10 left-0 w-48 h-48 sm:w-80 sm:h-80 bg-brand-sky/45 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse"></div>
@@ -294,15 +276,12 @@ export default function App() {
               <div className="inline-flex max-w-full items-center gap-2 px-4 sm:px-5 py-2 bg-white/90 backdrop-blur-sm rounded-full mb-6 sm:mb-8 shadow-lg shadow-brand-sky/15 border border-brand-sky/25">
                 <div className="w-2 h-2 shrink-0 bg-brand-mint rounded-full animate-pulse"></div>
                 <span className="text-xs sm:text-sm font-bold unimate-gradient-text truncate">
-                  Đang phục vụ 12,000+ sinh viên FPT
+                  Đang phục vụ 3,000 sinh viên FPT
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-brand-navy mb-4 sm:mb-6 leading-tight">
-                Gặp gỡ
-                <span className="block unimate-gradient-text mt-1 sm:mt-2">
-                  Unimate
-                </span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black unimate-gradient-text mb-4 sm:mb-6 leading-tight">
+                Unimate
               </h1>
 
               <p className="text-base sm:text-xl md:text-2xl text-brand-navy/70 mb-8 sm:mb-10 leading-relaxed">
@@ -356,8 +335,8 @@ export default function App() {
                 <div className="bg-gradient-to-r from-brand-royal via-brand-sky to-brand-mint px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
-                        <Sparkles className="w-7 h-7 text-brand-royal" />
+                      <div className="w-12 h-12 rounded-2xl overflow-hidden bg-white/95 p-0.5">
+                        <UnimateAvatar />
                       </div>
                       <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-brand-mint border-2 border-white rounded-full"></div>
                     </div>
@@ -376,8 +355,8 @@ export default function App() {
                 {/* Chat Messages */}
                 <div className="p-4 sm:p-6 space-y-4 h-[280px] sm:h-[360px] md:h-[450px] overflow-y-auto bg-gradient-to-b from-brand-sky/5 to-white">
                   <div className="flex gap-3 animate-fade-in">
-                    <div className="w-10 h-10 bg-gradient-to-br from-brand-royal to-brand-sky rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md shadow-brand-sky/20">
-                      <Sparkles className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 flex-shrink-0">
+                      <UnimateAvatar />
                     </div>
                     <div className="bg-white px-5 py-4 rounded-3xl rounded-tl-md shadow-md max-w-[85%] border border-brand-royal/20">
                       <p className="text-sm text-gray-800 leading-relaxed">
@@ -397,8 +376,8 @@ export default function App() {
                   </div>
 
                   <div className="flex gap-3 animate-fade-in" style={{ animationDelay: '1s' }}>
-                    <div className="w-10 h-10 bg-gradient-to-br from-brand-royal to-brand-sky rounded-2xl flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 flex-shrink-0">
+                      <UnimateAvatar />
                     </div>
                     <div className="bg-white px-5 py-4 rounded-3xl rounded-tl-md shadow-md max-w-[85%] border border-brand-royal/20">
                       <p className="text-sm text-gray-800 leading-relaxed">
@@ -604,15 +583,7 @@ export default function App() {
       <footer className="py-10 sm:py-12 px-4 sm:px-6 lg:px-8 bg-brand-navy pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-brand-royal via-brand-sky to-brand-mint rounded-2xl flex items-center justify-center shadow-lg shadow-brand-sky/20">
-                <Sparkles className="w-7 h-7 text-white" />
-              </div>
-              <div>
-                <span className="text-2xl font-black text-white">Unimate</span>
-                <p className="text-xs text-brand-sky/80">Your University Mate</p>
-              </div>
-            </div>
+            <UnimateLogo size="md" />
 
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
               <a href="#" className="text-white/60 hover:text-brand-mint transition-colors text-sm sm:text-base">Về chúng tôi</a>

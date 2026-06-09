@@ -40,7 +40,7 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 
-const requiredEnv = ['DATABASE_URL', 'ADMIN_API_KEY', 'JWT_SECRET'];
+const requiredEnv = ['MONGODB_URI', 'ADMIN_API_KEY', 'JWT_SECRET'];
 const missingEnv = requiredEnv.filter((key) => !process.env[key]);
 
 if (missingEnv.length > 0) {
@@ -75,7 +75,7 @@ app.use((error, _req, res, _next) => {
 });
 
 async function start() {
-  await connectDB(process.env.DATABASE_URL);
+  await connectDB(process.env.MONGODB_URI);
   ensureStorageDirs();
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

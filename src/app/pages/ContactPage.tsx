@@ -5,9 +5,9 @@ import {
   MapPin,
   MessageSquare,
   Phone,
-  Sparkles,
 } from 'lucide-react';
 import ContactFeedbackForm from '../components/ContactFeedbackForm';
+import { UnimateLogo } from '../components/UnimateLogo';
 
 const contactItems = [
   {
@@ -41,17 +41,7 @@ export default function ContactPage() {
     <div className="min-h-screen unimate-page-bg">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-10">
-          <Link to="/" className="inline-flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-brand-royal via-brand-sky to-brand-mint rounded-2xl shadow-lg shadow-brand-sky/20 flex items-center justify-center">
-              <Sparkles className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <span className="text-2xl font-black unimate-gradient-text">
-                Unimate
-              </span>
-              <p className="text-xs text-gray-500">Your University Mate</p>
-            </div>
-          </Link>
+          <UnimateLogo asLink size="md" />
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-2xl border border-brand-royal/25 bg-white px-5 py-3 font-semibold text-brand-navy transition hover:bg-brand-sky/10"

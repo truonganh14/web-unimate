@@ -1,7 +1,8 @@
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { Loader2, LogIn, Sparkles } from 'lucide-react';
+import { Loader2, LogIn } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { UnimateLogo } from '../components/UnimateLogo';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -30,14 +31,9 @@ export default function LoginPage() {
     <div className="min-h-screen unimate-page-bg flex items-center justify-center px-4 py-8 sm:py-12 pb-[calc(2rem+env(safe-area-inset-bottom))]">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-brand-royal via-brand-sky to-brand-mint rounded-2xl shadow-lg shadow-brand-sky/20 flex items-center justify-center">
-              <Sparkles className="w-7 h-7 text-white" />
-            </div>
-            <span className="text-2xl font-black unimate-gradient-text">
-              Unimate
-            </span>
-          </Link>
+          <div className="flex justify-center mb-6">
+            <UnimateLogo asLink size="lg" center />
+          </div>
           <h1 className="text-3xl font-black text-gray-900">Đăng nhập</h1>
           <p className="text-gray-600 mt-2">Chào mừng bạn quay lại Unimate</p>
         </div>
