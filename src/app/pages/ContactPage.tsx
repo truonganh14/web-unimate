@@ -13,14 +13,14 @@ const contactItems = [
   {
     icon: Mail,
     title: 'Email',
-    value: 'unimate@fpt.edu.vn',
-    href: 'mailto:unimate@fpt.edu.vn',
+    value: 'unimate16@gmail.com',
+    href: 'mailto:unimate16@gmail.com',
   },
   {
     icon: Phone,
     title: 'Hotline',
-    value: '1900 636 636',
-    href: 'tel:1900636636',
+    value: '098 739 4755',
+    href: 'tel:098 739 4755',
   },
   {
     icon: MapPin,
