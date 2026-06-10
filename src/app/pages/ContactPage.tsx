@@ -56,7 +56,7 @@ export default function ContactPage() {
             <span className="text-sm font-bold text-brand-navy">Liên hệ</span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-brand-navy mb-3 sm:mb-4 px-2">
-            Liên hệ với <span className="unimate-gradient-text">Unimate</span>
+            Liên hệ với <span className="text-brand-navy">Unimate</span>
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Đội ngũ Unimate luôn sẵn sàng hỗ trợ sinh viên FPT. Liên hệ trực tiếp qua các kênh bên dưới.

@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import logo1B from '../../assets/unimate-logo-dark.png';
-import mascot from '../../assets/unimate-mascot.png';
+import mascot from '../../assets/unimate-robot-fullbody-ver2.png';
 
 const sizeClasses = {
   sm: 'h-24',

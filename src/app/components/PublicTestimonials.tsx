@@ -72,7 +72,7 @@ export default function PublicTestimonials() {
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-brand-navy mb-4 sm:mb-6 px-2">
             Sinh viên nói gì về{' '}
-            <span className="unimate-gradient-text">
+            <span className="text-brand-navy">
               Unimate
             </span>
           </h2>

@@ -45,7 +45,7 @@ export default function App() {
     {
       icon: Zap,
       title: 'Siêu tốc độ',
-      description: 'Phản hồi trong < 10 giây, nhanh hơn gấp 100 lần so với phương pháp truyền thống',
+      description: 'Phản hồi trong < 10 giây, nhanh hơn gấp 10 lần so với phương pháp truyền thống',
       gradient: 'from-brand-amber to-brand-orange',
       delay: '100'
     },
@@ -68,21 +68,21 @@ export default function App() {
   const stats = [
     {
       icon: Users,
-      number: '3,000',
+      number: '3,000+',
       label: 'Sinh viên tin dùng',
       gradient: 'from-brand-royal to-brand-sky'
     },
     {
       icon: MessageCircle,
-      number: '50,000+',
+      number: '1,000+',
       label: 'Câu hỏi đã giải đáp',
       gradient: 'from-brand-amber to-brand-orange'
     },
     {
       icon: Zap,
-      number: '10s',
+      number: '< 30s',
       label: 'Thời gian phản hồi',
-      gradient: 'from-brand-navy to-brand-royal'
+      gradient: 'from-brand-mint to-brand-sky'
     }
   ];
 
@@ -106,7 +106,9 @@ export default function App() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center min-h-28 sm:min-h-36 py-2">
-            <UnimateLogo asLink size="md" onClick={closeMobileMenu} />
+            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="inline-flex shrink-0 min-w-0" aria-label="Về đầu trang">
+              <UnimateLogo asLink size="md" onClick={closeMobileMenu} />
+            </button>
 
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) =>
@@ -275,7 +277,7 @@ export default function App() {
             <div className="text-center lg:text-left">
               <div className="inline-flex max-w-full items-center gap-2 px-4 sm:px-5 py-2 bg-white/90 backdrop-blur-sm rounded-full mb-6 sm:mb-8 shadow-lg shadow-brand-sky/15 border border-brand-sky/25">
                 <div className="w-2 h-2 shrink-0 bg-brand-mint rounded-full animate-pulse"></div>
-                <span className="text-xs sm:text-sm font-bold unimate-gradient-text truncate">
+                <span className="text-xs sm:text-sm font-bold text-gray-800 truncate">
                   Đang phục vụ 3,000 sinh viên FPT
                 </span>
               </div>
@@ -439,7 +441,7 @@ export default function App() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 unimate-section-sky">
+      <section id="features" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 sm:mb-16 md:mb-20">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-mint/20 border border-brand-mint/30 rounded-full mb-4">
@@ -447,7 +449,7 @@ export default function App() {
               <span className="text-sm font-bold text-brand-royal">Tại sao chọn Unimate?</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-brand-navy mb-4 sm:mb-6">
-              Công nghệ <span className="unimate-gradient-text">dẫn đầu</span>
+              Công nghệ <span className="text-brand-navy">dẫn đầu</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-2">
               Được xây dựng với công nghệ AI tiên tiến nhất, mang đến trải nghiệm vượt trội cho sinh viên FPT
@@ -476,11 +478,11 @@ export default function App() {
       </section>
 
       {/* Procedures Section */}
-      <section id="benefits" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 unimate-section-mint">
+      <section id="benefits" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-brand-navy mb-4 sm:mb-6">
-              Hỗ trợ <span className="unimate-gradient-text">toàn diện</span>
+              Hỗ trợ <span className="text-brand-navy">toàn diện</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-2">
               Unimate thành thạo tất cả các thủ tục hành chính tại FPT University
@@ -508,7 +510,7 @@ export default function App() {
       <PublicTestimonials />
 
       {/* Feedback Section */}
-      <section id="feedback" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-brand-sky/8 to-brand-royal/6">
+      <section id="feedback" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
             <div className="inline-flex items-center gap-2 px-5 py-2 bg-brand-sky/15 border border-brand-sky/25 rounded-full mb-6">
@@ -530,25 +532,20 @@ export default function App() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 unimate-cta-bg">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-sky/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-brand-mint/15 rounded-full blur-3xl"></div>
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30"></div>
-        </div>
+      <section className="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
 
         <div className="relative max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-8">
-            <Rocket className="w-5 h-5 text-white" />
-            <span className="text-sm font-bold text-white">Miễn phí 100% - Không cần đăng ký</span>
+          <div className="inline-flex items-center gap-2 px-5 py-2 bg-brand-royal/10 border border-brand-royal/20 rounded-full mb-8">
+            <Rocket className="w-5 h-5 text-brand-royal" />
+            <span className="text-sm font-bold text-brand-navy">Miễn phí 100% - Không cần đăng ký</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 sm:mb-8 leading-tight px-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-brand-navy mb-6 sm:mb-8 leading-tight px-2">
             Sẵn sàng trải nghiệm<br className="hidden sm:block" />
             <span className="sm:hidden"> </span>tương lai của hỗ trợ sinh viên?
           </h2>
 
-          <p className="text-base sm:text-xl md:text-2xl text-white/80 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
+          <p className="text-base sm:text-xl md:text-2xl text-brand-navy/60 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
             Hàng nghìn sinh viên đã tiết kiệm hàng trăm giờ với Unimate. Đến lượt bạn!
           </p>
 
@@ -562,7 +559,7 @@ export default function App() {
             </Link>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 md:gap-8 text-white/80 text-sm sm:text-base">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 md:gap-8 text-brand-navy/60 text-sm sm:text-base">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               <span>Không cần cài đặt</span>
