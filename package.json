@@ -6,6 +6,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
+    "dev:all": "concurrently -n backend,web -c blue,green \"npm run dev --prefix backend\" \"npm run dev\"",
     "tunnel": "npm run tunnel:web --prefix backend",
     "tunnel:api": "npm run tunnel --prefix backend",
     "tunnel:web": "npm run tunnel:web --prefix backend"
@@ -68,6 +69,7 @@
     "vaul": "1.1.2"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "@tailwindcss/vite": "4.1.12",
     "@vitejs/plugin-react": "4.7.0",
     "tailwindcss": "4.1.12",
