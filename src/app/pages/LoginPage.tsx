@@ -95,17 +95,6 @@ export default function LoginPage() {
             Đăng ký ngay
           </Link>
         </p>
-        <p className="text-center text-sm text-gray-600 mt-3">
-          Trang chatbot admin:{' '}
-          <a
-            href="https://fpt-chat-bot-2026.web.app/"
-            className="font-semibold text-purple-600 hover:text-purple-700"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Mở FPT Chat Bot
-          </a>
-        </p>
       </div>
     </div>
   );

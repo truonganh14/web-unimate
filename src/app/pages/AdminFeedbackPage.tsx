@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { deleteFeedback, fetchFeedbacks, type FeedbackItem } from '../api/feedback';
 import { useAuth } from '../context/AuthContext';
-import { Loader2, RefreshCw, Shield, Star, Trash2 } from 'lucide-react';
+import { ExternalLink, Loader2, RefreshCw, Shield, Star, Trash2 } from 'lucide-react';
 
 export default function AdminFeedbackPage() {
   const { user, token, logout } = useAuth();
@@ -76,6 +76,15 @@ export default function AdminFeedbackPage() {
               Tổng cộng <span className="font-bold text-brand-navy">{feedbacks.length}</span> phản hồi
             </p>
             <div className="flex gap-3">
+              <a
+                href="https://fpt-chat-bot-2026.web.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-2xl border border-purple-200 bg-purple-50 px-4 py-2 text-sm font-semibold text-purple-700 hover:bg-purple-100"
+              >
+                <ExternalLink className="h-4 w-4" />
+                FPT Chat Bot
+              </a>
               <button
                 type="button"
                 onClick={() => token && loadFeedbacks(token)}
