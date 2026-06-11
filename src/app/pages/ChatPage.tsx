@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router';
 import {
-  Bot,
-  Sparkles,
   ArrowLeft,
   SendHorizontal,
   Volume2,
@@ -311,35 +309,29 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-[#EEF6FF] via-[#e8f2ff] to-[#f0f6ff] overflow-hidden">
+    <div className="flex h-screen unimate-page-bg overflow-hidden">
       {/* Sidebar */}
       <aside
-        className={`flex-shrink-0 flex flex-col transition-all duration-300 ease-in-out ${
+        className={`flex-shrink-0 flex flex-col transition-all duration-300 ease-in-out bg-white/95 backdrop-blur-xl border-r border-brand-sky/20 shadow-sm shadow-brand-sky/10 ${
           sidebarOpen ? 'w-72' : 'w-0'
         } overflow-hidden`}
-        style={{ backgroundColor: '#1a1a3e' }}
       >
-        <div
-          className="flex items-center justify-between px-4 h-16 flex-shrink-0 border-b"
-          style={{ borderColor: '#2a2a50' }}
-        >
+        <div className="flex items-center justify-between px-4 h-16 flex-shrink-0 border-b border-brand-sky/15">
           <div className="flex items-center gap-2 min-w-0">
-            <MessageSquare className="w-5 h-5 flex-shrink-0" style={{ color: '#00D2FF' }} />
-            <span className="font-bold truncate" style={{ color: '#ffffff' }}>Lịch sử</span>
+            <MessageSquare className="w-5 h-5 flex-shrink-0 text-brand-sky" />
+            <span className="font-bold truncate text-brand-navy">Lịch sử</span>
           </div>
           <div className="flex items-center gap-1">
             <button
               onClick={startNewSession}
-              className="p-2 rounded-xl transition-colors"
-              style={{ color: '#00D2FF', backgroundColor: 'transparent' }}
+              className="p-2 rounded-xl text-brand-royal hover:bg-brand-sky/10 transition-colors"
               title="Cuộc trò chuyện mới"
             >
               <Plus className="w-4 h-4" />
             </button>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="p-2 rounded-xl transition-colors"
-              style={{ color: '#7a8ab8' }}
+              className="p-2 rounded-xl text-brand-navy/50 hover:bg-brand-sky/10 hover:text-brand-navy transition-colors"
               title="Ẩn thanh bên"
             >
               <PanelLeftClose className="w-4 h-4" />
@@ -350,12 +342,11 @@ export default function ChatPage() {
         <div className="flex-1 overflow-y-auto py-2">
           {sessions.length === 0 && (
             <div className="px-4 py-8 text-center">
-              <MessageSquare className="w-8 h-8 mx-auto mb-2" style={{ color: '#2a2a50' }} />
-              <p className="text-sm mb-3" style={{ color: '#7a8ab8' }}>Chưa có cuộc trò chuyện nào</p>
+              <MessageSquare className="w-8 h-8 mx-auto mb-2 text-brand-sky/40" />
+              <p className="text-sm mb-3 text-brand-navy/50">Chưa có cuộc trò chuyện nào</p>
               <button
                 onClick={startNewSession}
-                className="text-sm font-semibold hover:underline"
-                style={{ color: '#00D2FF' }}
+                className="text-sm font-semibold text-brand-royal hover:text-brand-sky hover:underline"
               >
                 Bắt đầu ngay
               </button>
@@ -365,26 +356,29 @@ export default function ChatPage() {
             <div
               key={session.session_id}
               onClick={() => switchToSession(session.session_id)}
-              className="group mx-2 mb-1 px-3 py-3 rounded-xl cursor-pointer transition-all"
-              style={{
-                backgroundColor: activeSessionId === session.session_id ? '#252560' : 'transparent',
-                border: `1px solid ${activeSessionId === session.session_id ? '#2a2a50' : 'transparent'}`,
-              }}
+              className={`group mx-2 mb-1 px-3 py-3 rounded-xl cursor-pointer transition-all border ${
+                activeSessionId === session.session_id
+                  ? 'bg-brand-sky/10 border-brand-sky/30'
+                  : 'border-transparent hover:bg-brand-sky/5'
+              }`}
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium truncate" style={{ color: activeSessionId === session.session_id ? '#00D2FF' : '#9aabcd' }}>
+                  <p
+                    className={`text-sm font-medium truncate ${
+                      activeSessionId === session.session_id ? 'text-brand-royal' : 'text-brand-navy/70'
+                    }`}
+                  >
                     {session.last_message ? truncate(session.last_message, 40) : 'Cuộc trò chuyện mới'}
                   </p>
-                  <p className="text-xs mt-0.5 flex items-center gap-1" style={{ color: '#7a8ab8' }}>
+                  <p className="text-xs mt-0.5 flex items-center gap-1 text-brand-navy/45">
                     <Clock className="w-3 h-3" />
                     {formatDate(session.updated_at)}
                   </p>
                 </div>
                 <button
                   onClick={e => handleDeleteSession(e, session.session_id)}
-                  className="p-1 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-                  style={{ color: '#7a8ab8' }}
+                  className="p-1 rounded-lg text-brand-navy/40 hover:text-red-500 transition-all opacity-0 group-hover:opacity-100"
                   title="Xóa"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -398,17 +392,13 @@ export default function ChatPage() {
       {/* Main Chat Area */}
       <div className="flex flex-col flex-1 min-w-0">
         {/* Header */}
-        <header
-          className="flex-shrink-0 shadow-sm z-10"
-          style={{ backgroundColor: '#1a1a3e', borderBottom: '1px solid #2a2a50' }}
-        >
+        <header className="flex-shrink-0 bg-gradient-to-r from-brand-royal via-brand-sky to-brand-mint shadow-md shadow-brand-sky/20 z-10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
               {!sidebarOpen && (
                 <button
                   onClick={() => setSidebarOpen(true)}
-                  className="p-2 rounded-xl transition-colors"
-                  style={{ color: '#00D2FF' }}
+                  className="p-2 rounded-xl text-white hover:bg-white/15 transition-colors"
                   title="Mở lịch sử"
                 >
                   <PanelLeft className="w-5 h-5" />
@@ -416,33 +406,31 @@ export default function ChatPage() {
               )}
               <button
                 onClick={() => navigate('/')}
-                className="p-2 rounded-xl transition-colors"
-                style={{ color: '#00D2FF' }}
+                className="p-2 rounded-xl text-white hover:bg-white/15 transition-colors"
                 title="Quay lại trang chủ"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
 
-              <Link to="/" className="w-10 h-10 rounded-xl overflow-hidden bg-white/10 block">
+              <Link to="/" className="w-10 h-10 rounded-xl overflow-hidden bg-white/95 p-0.5 block shadow-sm">
                 <UnimateAvatar />
               </Link>
 
               <div>
-                <h1 className="text-lg font-bold" style={{ color: '#ffffff' }}>Unimate</h1>
-                <p className="text-xs" style={{ color: '#7a8ab8' }}>Trợ lý AI FPT University</p>
+                <h1 className="text-lg font-bold text-white">Unimate</h1>
+                <p className="text-xs text-white/80">Trợ lý AI FPT University</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               {user ? (
-                <span className="hidden sm:inline text-sm font-medium mr-2" style={{ color: '#9aabcd' }}>
+                <span className="hidden sm:inline text-sm font-medium text-white/90 mr-2">
                   {user.name}
                 </span>
               ) : (
                 <Link
                   to="/login"
-                  className="text-sm font-medium mr-2"
-                  style={{ color: '#00D2FF' }}
+                  className="text-sm font-medium text-white hover:text-brand-mint mr-2"
                 >
                   Đăng nhập
                 </Link>
@@ -450,8 +438,7 @@ export default function ChatPage() {
 
               <button
                 onClick={() => setIsMuted(m => !m)}
-                className="p-2 rounded-xl transition-colors"
-                style={{ color: '#7a8ab8' }}
+                className="p-2 rounded-xl text-white/80 hover:text-white hover:bg-white/15 transition-colors"
                 title={isMuted ? 'Bật âm thanh' : 'Tắt âm thanh'}
               >
                 {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
@@ -460,8 +447,7 @@ export default function ChatPage() {
               {activeSessionId && (
                 <button
                   onClick={handleClearChat}
-                  className="p-2 rounded-xl transition-colors"
-                  style={{ color: '#7a8ab8' }}
+                  className="p-2 rounded-xl text-white/80 hover:text-red-200 hover:bg-white/15 transition-colors"
                   title="Xóa cuộc trò chuyện"
                 >
                   <Trash2 className="w-5 h-5" />
@@ -472,11 +458,11 @@ export default function ChatPage() {
         </header>
 
         {/* Messages */}
-        <main className="flex-1 overflow-y-auto" style={{ backgroundColor: '#f0f6ff' }}>
+        <main className="flex-1 overflow-y-auto bg-gradient-to-b from-brand-sky/8 via-white to-brand-mint/8">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 space-y-6">
             {loadingHistory && (
-              <div className="flex items-center justify-center py-12 gap-2" style={{ color: '#7a8ab8' }}>
-                <Loader2 className="w-4 h-4 animate-spin" />
+              <div className="flex items-center justify-center py-12 gap-2 text-brand-navy/50">
+                <Loader2 className="w-4 h-4 animate-spin text-brand-sky" />
                 <span className="text-sm">Đang tải lịch sử...</span>
               </div>
             )}
@@ -484,15 +470,16 @@ export default function ChatPage() {
             {!loadingHistory && messages.length === 0 && !isLoading && (
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <div className="relative mb-6">
-                  <div className="absolute inset-0 rounded-full blur-2xl opacity-20" style={{ backgroundColor: '#00D2FF' }} />
-                  <div className="relative w-20 h-20 rounded-full flex items-center justify-center shadow-xl overflow-hidden bg-white">
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-sky to-brand-mint rounded-full blur-2xl opacity-30" />
+                  <div className="relative w-20 h-20 rounded-full flex items-center justify-center shadow-xl shadow-brand-sky/30 overflow-hidden bg-white">
                     <Link to="/"><UnimateAvatar /></Link>
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold mb-2" style={{ color: '#030536' }}>
-                  Xin chào! Mình là Unimate
+                <h2 className="text-2xl font-bold text-brand-navy mb-2">
+                  Xin chào! Mình là{' '}
+                  <span className="unimate-gradient-text">Unimate</span>
                 </h2>
-                <p className="mb-8 max-w-md" style={{ color: '#7a8ab8' }}>
+                <p className="mb-8 max-w-md text-brand-navy/60">
                   Trợ lý sinh viên FPT University. Hỏi mình bất cứ điều gì về quy chế, học vụ, lịch thi, học phí nhé!
                 </p>
 
@@ -509,12 +496,7 @@ export default function ChatPage() {
                         setInput(suggestion);
                         inputRef.current?.focus();
                       }}
-                      className="text-left px-4 py-3 rounded-xl text-sm transition-all shadow-sm"
-                      style={{
-                        backgroundColor: '#ffffff',
-                        border: '1px solid #c5dcff',
-                        color: '#2d4a3a',
-                      }}
+                      className="text-left px-4 py-3 bg-white border border-brand-sky/25 rounded-xl text-sm text-brand-navy hover:border-brand-sky hover:bg-brand-sky/8 transition-all shadow-sm shadow-brand-sky/10"
                     >
                       {suggestion}
                     </button>
@@ -542,12 +524,11 @@ export default function ChatPage() {
 
                 <div className={`flex flex-col gap-1 max-w-[80%] ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                   <div
-                    className="px-5 py-3 rounded-2xl text-sm leading-relaxed shadow-sm"
-                    style={
+                    className={`px-5 py-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
                       msg.role === 'user'
-                        ? { background: 'linear-gradient(135deg, #2D8EFF, #00D2FF)', color: '#ffffff' }
-                        : { backgroundColor: '#ffffff', border: '1px solid #c5dcff', color: '#2a2a50' }
-                    }
+                        ? 'bg-gradient-to-r from-brand-sky to-brand-royal text-white rounded-tr-md shadow-brand-sky/25'
+                        : 'bg-white border border-brand-royal/20 text-brand-navy rounded-tl-md'
+                    }`}
                   >
                     {msg.content.split('\n').map((line, i) => {
                       const formatted = line
@@ -568,7 +549,7 @@ export default function ChatPage() {
 
                       if (line.startsWith('- ') || line.startsWith('• ')) {
                         return (
-                          <p key={i} className="mb-1 last:mb-0 pl-3 border-l-2" style={{ borderColor: '#00D2FF' }}>
+                          <p key={i} className="mb-1 last:mb-0 pl-3 border-l-2 border-brand-sky/40">
                             {line.substring(2)}
                           </p>
                         );
@@ -587,15 +568,14 @@ export default function ChatPage() {
                   {msg.role === 'assistant' && msg.audioUrl && (
                     <button
                       onClick={() => handleReplay(msg)}
-                      className="flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-lg transition-colors"
-                      style={{ color: '#00D2FF' }}
+                      className="flex items-center gap-1.5 px-2.5 py-1 text-xs text-brand-royal hover:text-brand-sky hover:bg-brand-sky/10 rounded-lg transition-colors"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
                       Nghe lại
                     </button>
                   )}
 
-                  <span className="text-xs px-1" style={{ color: '#9db5a7' }}>
+                  <span className="text-xs text-gray-400 px-1">
                     {formatTime(msg.createdAt)}
                   </span>
                 </div>
@@ -607,9 +587,9 @@ export default function ChatPage() {
                 <div className="flex-shrink-0 w-9 h-9 rounded-xl overflow-hidden bg-white shadow-sm">
                   <UnimateAvatar />
                 </div>
-                <div className="px-5 py-4 rounded-2xl rounded-tl-md shadow-sm" style={{ backgroundColor: '#ffffff', border: '1px solid #c5dcff' }}>
-                  <div className="flex items-center gap-2 text-sm" style={{ color: '#7a8ab8' }}>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                <div className="px-5 py-4 rounded-2xl rounded-tl-md shadow-sm bg-white border border-brand-sky/25">
+                  <div className="flex items-center gap-2 text-sm text-brand-navy/60">
+                    <Loader2 className="w-4 h-4 animate-spin text-brand-sky" />
                     Unimate đang suy nghĩ...
                   </div>
                 </div>
@@ -621,12 +601,9 @@ export default function ChatPage() {
         </main>
 
         {/* Input */}
-        <footer className="flex-shrink-0 p-4" style={{ backgroundColor: '#ffffff', borderTop: '1px solid #e2efe5' }}>
+        <footer className="flex-shrink-0 bg-white/95 backdrop-blur-xl border-t border-brand-sky/20 p-4">
           <div className="max-w-3xl mx-auto">
-            <div
-              className="flex items-end gap-3 rounded-2xl px-4 py-3 transition-all"
-              style={{ backgroundColor: '#f0f6ff', border: '1px solid #c5dcff' }}
-            >
+            <div className="flex items-end gap-3 bg-white border border-brand-sky/25 rounded-2xl px-4 py-3 focus-within:border-brand-sky focus-within:ring-2 focus-within:ring-brand-sky/20 transition-all shadow-sm shadow-brand-sky/10">
               <textarea
                 ref={inputRef}
                 value={input}
@@ -634,8 +611,8 @@ export default function ChatPage() {
                 onKeyDown={handleKeyDown}
                 placeholder="Hỏi Unimate bất cứ điều gì..."
                 rows={1}
-                className="flex-1 bg-transparent resize-none outline-none text-sm max-h-40"
-                style={{ minHeight: '24px', color: '#1a2e1f' }}
+                className="flex-1 bg-transparent resize-none outline-none text-sm text-brand-navy placeholder-brand-navy/40 max-h-40"
+                style={{ minHeight: '24px' }}
                 onInput={e => {
                   const target = e.target as HTMLTextAreaElement;
                   target.style.height = 'auto';
@@ -647,10 +624,7 @@ export default function ChatPage() {
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
-                className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all shadow-md"
-                style={{
-                  background: 'linear-gradient(135deg, #2D8EFF, #00D2FF)',
-                }}
+                className="flex-shrink-0 w-10 h-10 unimate-btn-primary hover:shadow-lg disabled:from-gray-300 disabled:to-gray-300 disabled:shadow-none rounded-xl flex items-center justify-center transition-all transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <Loader2 className="w-4 h-4 text-white animate-spin" />
@@ -660,7 +634,7 @@ export default function ChatPage() {
               </button>
             </div>
 
-            <p className="text-center text-xs mt-2" style={{ color: '#9db5a7' }}>
+            <p className="text-center text-xs text-brand-navy/45 mt-2">
               Unimate có thể mắc sai sót — kiểm tra thông tin quan trọng với Phòng Dịch vụ Sinh viên.
             </p>
           </div>
