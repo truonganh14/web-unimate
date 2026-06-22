@@ -68,8 +68,8 @@ export default function App() {
   const stats = [
     {
       icon: Users,
-      number: '3,000+',
-      label: 'Sinh viên tin dùng',
+      number: '10,000+',
+      label: 'Sinh viên sử dụng',
       gradient: 'from-brand-royal to-brand-sky'
     },
     {
@@ -80,7 +80,7 @@ export default function App() {
     },
     {
       icon: Zap,
-      number: '< 30s',
+      number: '> 30s',
       label: 'Thời gian phản hồi',
       gradient: 'from-brand-mint to-brand-sky'
     }
@@ -278,7 +278,7 @@ export default function App() {
               <div className="inline-flex max-w-full items-center gap-2 px-4 sm:px-5 py-2 bg-white/90 backdrop-blur-sm rounded-full mb-6 sm:mb-8 shadow-lg shadow-brand-sky/15 border border-brand-sky/25">
                 <div className="w-2 h-2 shrink-0 bg-brand-mint rounded-full animate-pulse"></div>
                 <span className="text-xs sm:text-sm font-bold text-gray-800 truncate">
-                  Đang phục vụ 3,000 sinh viên FPT
+                  Đang phục vụ 10,000 sinh viên FPT
                 </span>
               </div>
 
